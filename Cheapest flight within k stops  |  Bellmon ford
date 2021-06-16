@@ -1,0 +1,28 @@
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        List<int[]>[] graph = new ArrayList[n];
+        for(int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for(int[] flight : flights) {
+            int from = flight[0], to = flight[1], price = flight[2];
+            graph[from].add(new int[] {to, price});
+        }
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[src] = 0;
+        for(int i = 0; i <= k; i++) {
+            int[] prevDistance = Arrays.copyOf(distance, n);
+            for(int j = 0; j < n; j++) {
+                for(int[] edge : graph[j]) {
+                    if(prevDistance[j] == Integer.MAX_VALUE)    continue;
+                    int to = edge[0], weight = edge[1];
+                    if(distance[to] > prevDistance[j] + weight) {
+                        distance[to] = prevDistance[j] + weight;
+                    }
+                }
+            }
+        }
+        return distance[dst] == Integer.MAX_VALUE ? -1 : distance[dst];
+    }
+}
