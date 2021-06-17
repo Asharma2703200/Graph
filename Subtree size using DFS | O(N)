@@ -1,0 +1,12 @@
+int dfs(int src){
+   visited[src] = true;
+   int cur_size = 1;
+   for(Edge e: graph[srs]){
+      if(visited[e.nbr] == false){
+      dfs(e.nbr);
+      }
+   }
+   subtreesize[src] = cur_size;
+   
+   return cur_size;
+}
