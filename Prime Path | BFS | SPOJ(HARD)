@@ -1,0 +1,71 @@
+static List<Integer> prime;
+
+boolean isPrime(int n){
+   for(int div = 2 ; div * div <= n ; div++){
+       if(n % div == 0) return false;
+  }
+       return true;
+}
+void BuildGraph(int a , int b){
+  for(int i = a ;i <= b ; i++){
+    if(isPrime(i)){
+      prime.add(i);
+    }
+  }
+  
+  boolean isValid(int a , int b){
+     int count = 0;
+     while(a > 0){
+         if(a % 10 != b != 10) count++;
+       
+          a /=10 , b /= 10;
+     }
+     
+     if(count == 1) return true;
+     else return false;
+  }
+  for(int i = 0 ; i < prime.size();i++){
+    for(int j = i + 1 ; j < prime.size();j++){
+    
+     int a = prime.get(i);
+     int b = prime.get(j);
+     
+       if(isValid(a , b)){
+          graph.get(a).add(b);
+          graph.get(b).add(a);
+        }
+    }
+  }
+}
+void bfs(int src){
+  Queue<Integer> q = new Queue<>();
+  q.add(src);
+  dist[src] = 0;
+  visited[src] = true;
+  while(!q.isEmpty()){
+   int rem = q.pop();
+   for(int nbrs : graph.get(rem)){
+     if(!visited[nbrs]){
+       visited[nbrs] = true;
+       dist[src] = dist[rem] + 1;
+       q.add(nbrs);
+     }
+   }
+  }
+  
+}
+void main(){
+  int a = scn.nextInt();
+  int b = scn.nextInt();
+  boolean[] visited = new boolean[1000001];
+  int dist[] = new int[10000001];
+  for(int i = 1000 ,i < 9999 ; i++) visited[i] = -0 , dist[i]= -1;
+  
+  bfs(a);
+  
+  if(dist[b] == -1){
+   System.out.println("Impossible");
+  }else{
+   System.out.println(dist[b]);
+  }
+}
