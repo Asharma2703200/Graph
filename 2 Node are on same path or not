@@ -1,0 +1,21 @@
+static int[] inTime = new int[vtces];
+static int[] outTime = new int[vtces];
+int timer = 1;
+
+void dfs(ArrayList<Edge>[] graph , int src , boolean[] visited){
+     visited[src] = true;
+     inTime[src] = timer++;
+     
+     for(Edge e : graph[src]){
+        if(!visited[e.nbr]){
+           dfs(graph , e.nbr , visited);
+        }
+     }
+     outTime[src] = timer++;
+}
+
+
+// check the condition for the same path for the nodes n1 and n2 :
+// where n1 is root node and n2 is int subtreee node : 
+
+if(inTime[n1] < inTime[n2] && outTime[n1] > outTime[n2]) return true;
