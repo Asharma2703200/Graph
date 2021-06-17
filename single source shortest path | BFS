@@ -1,0 +1,28 @@
+class Pair{
+  int v;
+  int dist;
+  Pair(int v ,int dist){
+     this.v = v;
+     this.dist = dist; 
+}
+}  
+  class solution{
+  int[] dist - new int[vtces];
+  dist[src] = 0;
+  Queue<Pair> q = new Queue<>();
+  q.add(new Pair(src , 0));
+  while(q.size() > 0){
+     Pair rem = q.pop();
+     
+     if(visited[rem.v] == true) continue;
+     
+     visited[rem.v] = true;
+     dist[rem.v] = rem.dist;
+     for(Edge e : graph[src]){
+        if(!visited[e.nbr]){
+           q.add(e.nbr , rem.dist + 1);
+        }
+     }
+     
+  }
+}  
