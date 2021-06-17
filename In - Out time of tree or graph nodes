@@ -1,0 +1,15 @@
+static int[] dfs = new int[vtces];
+static int[] bfs = new int[vtces];
+int timer = 1;
+
+void dfs(ArrayList<Edge>[] graph , int src , boolean[] visited){
+     visited[src] = true;
+     in[src] = timer++;
+     
+     for(Edge e : graph[src]){
+        if(!visited[e.nbr]){
+           dfs(graph , e.nbr , visited);
+        }
+     }
+     out[src] = timer++;
+}
