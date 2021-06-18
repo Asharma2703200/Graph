@@ -1,0 +1,34 @@
+int[] in = new int[10000001];
+int[] low = new int[10000001];
+boolean[] visited = new boolean[100000001];
+
+dfs(int src , int parent = -1){
+  visited[src] = true;
+  in[src] = low[src] = timer++;
+  for(Edge e : graph[src]){
+     if(e.nbr == parent) continue;
+     
+     if(visited[e.nbr] == true){
+       low[src] = Math.min(low[src] , in[e.nbr]);
+     }else{
+       dfs(e.nbr , src);
+       
+       low[src] = Math.min(low[src] , low[e.nbr]);
+       
+       if(low[e.nbr] >= in[src]){
+          cout<<ppint is src<<endl;
+       }
+        
+     }
+     
+  }
+  
+}
+void cutPoints(){
+
+  for(int i = 0 ; i < n ; i++){
+   if(visited[i] == false){
+     dfs(i);
+   }
+  }
+}
