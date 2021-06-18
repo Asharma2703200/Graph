@@ -1,0 +1,27 @@
+static int[] in = new int[1000001];
+static int[] low = new int[1000001];
+static boolean[] visited = new boolean[10000001];
+static int timer = 0;
+
+void dfs(int src , int parent){
+ visited[src] = true;
+ int[src] = low[src] = timer;
+ timer++;
+ 
+ for(Edge e  : graph[src]){
+    if(e.br == parent) continue;
+    
+    if(visited[e.nbr] == true){
+       low[src] = Math.min(low[src] , in[e.nbr]);
+    }else{
+       dfs(e.nbr , src);
+       
+       if(low[e.nbr] > in[src]){
+         cout<<src<<e.nbr<<is  bridge<<endl;
+       }
+       
+       low[src] = Math.min(low[src] , low[e.nbr]);
+    }
+    
+ }
+}
