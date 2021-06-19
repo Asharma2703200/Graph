@@ -1,0 +1,61 @@
+... says sort the array by weight parameter
+///connect the edges 
+/// take a sum variable to store the toatl sum 
+// 
+
+import java.util.*;
+import java.io.*;
+public class Main{
+    static int[] par = new int[100001];
+    static void merge(int a , int b){
+        par[a] = b;
+    }
+    static int find(int a){
+        if(par[a] == 0){
+            return a;
+        }else{
+            return par[a] = find(par[a]);
+        }
+    }
+    static class Edge implements Comparable < Edge > {
+        int a;
+        int b;
+        int w;
+        Edge(int a , int b , int w){
+            this.a = a;
+            this.b = b;
+            this.w = w;
+        }
+        public int compareTo(Edge o){
+            return this.w - o.w;
+        }
+    }
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[]s = br.readLine().split(" ");
+        int v = Integer.parseInt(s[0]);
+        int e = Integer.parseInt(s[1]);
+        Edge[] arr = new Edge[e];
+        for(int i = 0 ;i < e;i++){
+            String[] st = br.readLine().split(" ");
+            int a = Integer.parseInt(st[0]);
+            int b = Integer.parseInt(st[1]);
+            int w = Integer.parseInt(st[2]);
+            arr[i] = new Edge(a , b , w);
+        }
+        
+        Arrays.sort(arr);
+        int sum = 0;
+        
+        for(int i = 0 ; i < e ; i++){
+            int x = find(arr[i].a);
+            int y = find(arr[i].b);
+            
+            if(x != y){
+                sum += arr[i].w;
+                merge(x , y);
+            }
+        }
+        System.out.println(sum);
+    }
+}
