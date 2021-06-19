@@ -1,0 +1,31 @@
+find(a){
+ if(parent[a] < 0){
+    return a;
+ }else{
+ int x = find(parfent[a]);
+ parent[a] = x;
+ return x;
+ }
+}
+
+union(a , b){
+ parent[a] = min(parent[a] , parent[b]);
+ parent[b] = a; 
+}
+
+solution
+
+for the querry
+2 4
+find(2) = 1;
+find(4) = 1;
+return TIE;
+
+for the 2nd query
+2 3
+find(2) = 1
+find(3) = 5
+parent[1] > parent[5]
+winner 3;
+
+as we are storing negative values
