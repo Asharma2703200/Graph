@@ -1,0 +1,17 @@
+we use this techniqueu to solev the qiuery in nlogn time as the hight f the treee will be logn
+
+int[] par= new int[1000001];
+int[] rank = new int[100000001];
+
+void merge(int a , int b){
+ a = find(a);
+ b = find(b);
+ 
+ if(rank[a] > rank[b]){
+   par[b] = a;
+   rank[a] += ran[b];
+ }else{
+  parent[a] = b;
+  rank[b] += rank[a];
+ }
+}
