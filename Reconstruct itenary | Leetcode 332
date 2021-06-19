@@ -1,0 +1,24 @@
+class Solution {
+    public List<String> findItinerary(List<List<String>> tickets) {
+         Map<String , PriorityQueue<String>> map = new HashMap<>();
+        for(List<String> l : tickets){
+            PriorityQueue<String> q =  map.getOrDefault(l.get(0) , new PriorityQueue<>( (s1, s2) -> s1.compareTo(s2) ));
+            q.add(l.get(1));
+            map.put(l.get(0) , q);
+        }
+        List<String> res = new ArrayList<>();
+        Stack<String> st = new Stack<>();
+        st.push("JFK");
+        while(!st.isEmpty()){
+            String s = st.peek();
+            PriorityQueue<String> q = map.get(s);
+            if(q == null || q.size() == 0){
+                res.add(st.pop());
+            }else{
+                st.push(q.poll());
+            }
+        }
+        Collections.reverse(res);
+        return res;
+    }
+}
