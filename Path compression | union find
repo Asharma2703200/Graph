@@ -1,0 +1,41 @@
+input : 
+8 7
+7 6
+6 5
+5 4
+4 3
+3 2
+2 1
+
+as we know the find algo take 0(n) time for returning the actual parent in the worst cases
+so we will do the path compression technique so that it will work in o(1) or in constant time;
+
+interative function :
+
+find(a){
+List<Integer> arr = new ArrayList<>();
+while(parent[a] > 0){
+arr.add(a);
+ a = parent[a];
+}
+for(int i = 0 ; i < arr.length;i++){
+   parent[a.get(i)] = a;
+}
+
+return a;
+}
+
+Recursive function :
+find(a){
+if(parent[a] < 0){
+ return a;
+}else{
+ int x = find(parent[a]);
+ parent[a] = x;
+ return x;
+}
+}
+
+
+
+
