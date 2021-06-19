@@ -1,0 +1,14 @@
+// pseudo code
+int lca(int b , int b){
+  int d = level(b) - level(a);
+  while(d--){
+   b = par[b];
+  }
+  if(a == b) return a;
+  
+  while(par[a] != par[b]){
+    a = par[a] , b = par[b];
+  }
+  return par[a];
+}
+
