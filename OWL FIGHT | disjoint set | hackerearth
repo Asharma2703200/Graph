@@ -29,3 +29,22 @@ parent[1] > parent[5]
 winner 3;
 
 as we are storing negative values
+
+
+final code :
+q -> is query
+a -> owl 1
+b -> owl 2
+while(q--){
+cin<<a<<b;
+par_a = find(a);
+par_b = find(b);
+  if(par_a == par_b) return TIE;
+  else{
+   if(parent[par_a] > parent[par_b]) return b winner;
+   else return a winner;
+  }
+}
+
+
+
