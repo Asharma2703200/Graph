@@ -1,0 +1,77 @@
+class Solution {
+
+int row;
+int col;
+int time;
+public Solution(int row,int col,int time) {
+	
+	this.row=row;
+	this.col=col;
+	this.time=time;
+}
+public Solution(){
+
+}
+
+public  int orangesRotting(int [][] arr) {
+	Queue<Solution> q=new LinkedList<>();
+	for(int i=0;i<arr.length;i++) {
+		for(int j=0;j<arr[0].length;j++) {
+			if(arr[i][j]==2) {
+				Solution np=new Solution(i,j,0);
+				q.add(np);
+			}
+			
+		}
+	}
+	Solution rp=null;
+	while(!q.isEmpty()) {
+		rp=q.remove();
+		int r=rp.row;
+		int c=rp.col;
+		int t=rp.time;
+		if(r-1>=0) {
+			if(arr[r-1][c]==1) {
+				Solution np=new Solution(r-1,c,t+1);
+				q.add(np);
+			arr[r-1][c]=2;
+			}
+		}
+		if(r+1<arr.length) {
+			if(arr[r+1][c]==1) {
+				Solution np=new Solution(r+1,c,t+1);
+				q.add(np);
+			arr[r+1][c]=2;
+			}
+		}
+		if(c-1>=0) {
+			if(arr[r][c-1]==1) {
+				Solution np=new Solution(r,c-1,t+1);
+				q.add(np);
+			arr[r][c-1]=2;
+			}
+		}
+		if(c+1<arr[0].length) {
+			if(arr[r][c+1]==1) {
+				Solution np=new Solution(r,c+1,t+1);
+				q.add(np);
+			arr[r][c+1]=2;
+			}
+		}
+		
+	}
+	for(int i=0;i<arr.length;i++) {
+		for(int j=0;j<arr[0].length;j++) {
+			if(arr[i][j]==1) {
+				return -1;
+			}
+		}
+		
+	}
+	if(rp==null) {
+		return 0;
+	}
+	return rp.time;
+	
+}
+}
