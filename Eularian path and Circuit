@@ -1,0 +1,8 @@
+/undirected grah
+if degree of each nodde is even than it surely have eularian circuit
+
+
+
+directed graph
+indegree == outdegree fpr circuit 
+and n - nodes should have indegree == outdegree
