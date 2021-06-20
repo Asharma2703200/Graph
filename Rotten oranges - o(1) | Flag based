@@ -1,0 +1,92 @@
+//Input ->
+3
+3
+2 1 1
+1 1 0
+0 1 1
+//output->
+4
+
+//Input->
+3
+3
+2 1 1
+0 1 1
+1 0 1
+//output->
+-1
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+  public static void main(String[] args) throws Exception {
+      
+     Scanner scn = new Scanner(System.in);
+     int n = scn.nextInt();
+     int m = scn.nextInt();
+     
+     int[][] mat = new int[n][m];
+     for(int i = 0 ;i < n ; i++){
+         for(int j = 0 ; j <  m ; j++){
+             mat[i][j] = scn.nextInt();
+        }
+     }
+     
+     int ans = sr(mat);
+     System.out.println(ans);
+  }
+    static boolean isSafe(int[][] mat , int r , int c){
+        if(r < 0 || c < 0 || r >= mat.length || c >= mat[0].length  || mat[r][c] == 0){
+            return false;
+        }
+        return true;
+    }
+    static int sr(int[][] mat){
+        boolean flag = false;
+        int no = 2 ;
+        
+     while (true){
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if (mat[i][j] == no){
+                    if (isSafe(mat , i + 1, j) && mat[i + 1][j] == 1) {
+                        mat[i + 1][j] = mat[i][j] + 1;
+                        flag = true;
+                    }
+                    if (isSafe(mat , i, j + 1) && mat[i][j + 1] == 1){
+                        mat[i][j + 1] = mat[i][j] + 1;
+                        flag = true;
+                    }
+                    if (isSafe(mat , i - 1, j) && mat[i - 1][j] == 1){
+                        mat[i - 1][j] = mat[i][j] + 1;
+                        flag = true;
+                    }
+                    if (isSafe(mat , i, j - 1) && mat[i][j - 1] == 1){
+                        mat[i][j - 1] = mat[i][j] + 1;
+                        flag = true;
+                    }
+                }
+            }
+        }
+ 
+        if (!flag)
+            break;
+             
+        flag = false;
+        no++;
+    }
+  
+    for(int i = 0; i < mat.length; i++)
+    {
+        for(int j = 0; j < mat[0].length; j++)
+        {
+            if (mat[i][j] == 1)
+                return -1;
+        }
+    }
+  
+    return no - 2;
+    }
+}
