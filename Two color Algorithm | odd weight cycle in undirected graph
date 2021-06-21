@@ -1,0 +1,98 @@
+import java.util.*;
+import java.io.*;
+public class Main{
+    static class Edge{
+        int src;
+        int nbr;
+        int wt;
+        Edge(int src , int nbr , int wt){
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+    static boolean twoColorUtil(ArrayList<Edge>[] graph , int src , int n , int[] color){
+        color[src] = 1;
+        
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        
+        while (!q.isEmpty()) 
+    {
+        int u = q.peek();
+        q.poll();
+  
+        // Find all non-colored adjacent vertices
+        for (int v = 0; v < G[u].size(); ++v)
+        {
+  
+            // An edge from u to v exists and
+            // destination v is not colored
+            if (colorArr[G[u].elementAt(v)] == -1) 
+            {
+  
+                // Assign alternate color to this
+                // adjacent v of u
+                colorArr[G[u].elementAt(v)] = 1 - colorArr[u];
+                q.add(G[u].elementAt(v));
+            }
+  
+            // An edge from u to v exists and destination
+            // v is colored with same color as u
+            else if (colorArr[G[u].elementAt(v)] == colorArr[u])
+                return false;
+        }
+    }
+    return true;
+    
+    
+    }
+    static boolean twoColorAlgorithm(ArrayList<Edge>[] graph , int n){
+        int[] color = new int[n + 1];
+        
+        for(int i = 1 ;i <= n ; i++){
+            color[i] = -1;
+        }
+        
+        for(int i = 1 ; i <= n ; i++){
+            if(color[i] == -1){
+                if(twoColorUtil(graph , i , n , color) == false){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s = br.readLine().split(" ");
+        int vtces = Integer.parseInt(s[0]);
+        ArrayList<Edge>[] graph = new ArrayList[2*vtces];
+        for(int i = 0 ; i < 2*vtces;i++){
+            graph[i] = new ArrayList<>();
+        }
+        int edges = Integer.parseInt(s[1]);
+        int pseudo = edges + 1;
+        int pseudo_count = 0;
+        for(int i = 0 ; i < edges;i++){
+            String[] st = br.readLine().split(" ");
+            int u = Integer.parseInt(st[0]);
+            int v = Integer.parseInt(st[1]);
+            int wt = Integer.parseInt(st[2]);
+            
+            if(wt % 2 == 1){
+                graph[u].add(new Edge(u , v , wt));
+                graph[v].add(new Edge(v , u , wt));
+            }else{
+                graph[u].add(new Edge(u , pseudo , wt));
+                graph[pseudo].add(new Edge(pseudo , u , wt));
+                graph[v].add(new Edge(v , pseudo , wt));
+                graph[pseudo].add(new Edge(pseudo , v , wt));
+                pseudo_count++;
+                pseudo++;
+            }
+            
+        }
+        System.out.println(twoColorAlgorithm(graph ,edges + pseudo_count));
+    }
+}
