@@ -1,6 +1,67 @@
+//Input
+4 6
+0 1 
+0 2 
+1 2
+2 0
+2 3
+3 4
+output
+true
+
+//input
+4 3
+0 1
+1 2
+2 3
+output
+false
+
+
 import java.util.*;
 import java.io.*;
 public class Main{
+
+  static int white = 0 , gray = 1 , black = 2;
+
+    static boolean isCycleUTIL(ArrayList<ArrayList<Integer>> graph  , int u , int[] color){
+        color[u] =  gray;
+        
+        for(int i : graph.get(u)){
+
+            if(color[i] == gray)
+                 return true;
+
+            
+            if (color[i] == white && isCycleUTIL(graph , i, color) == true)
+                return true;
+
+       }
+       color[u] = black;
+
+       return false;
+    }
+
+ public static boolean isCycle(ArrayList<ArrayList<Integer>> graph , int n){
+        int[] color = new int[n];
+        
+        for(int i = 0 ; i < n ; i++){
+            color[i] = white;
+        }
+
+        for(int i = 0 ;i < n ; i++)
+{
+            if(color[i] == white)
+{
+                if(isCycleUTIL(graph , i , color) == true ){
+                    return true;
+                }
+
+            }
+
+        }
+        return false;
+    }
     public static void main(String[] args) throws Exception {
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,41 +80,8 @@ public class Main{
             int u = Integer.parseInt(st[0]);
             int v = Integer.parseInt(st[1]);
             graph.get(u).add(v);
-            graph.get(v).add(u);
         }
-        System.out.println(isCycle(graph , vtces));
-    }
-    static int white = 0 , gray = 1 , black = 2;
-    static boolean isCycleUTIL(ArrayList<ArrayList<Integer>> graph  , int u , int[] color){
-        color[u] =  gray;
-        
-        for(int i : graph.get(u)){
-
-            if(color[i] == gray){
-                 return true;
-            }
-            
-            if (color[i] == white && isCycleUTIL(graph , i, color) == true)
-                return true;
-
-       }
-       color[u] = black;
-
-       return false;
-    }
-    public static boolean isCycle(ArrayList<ArrayList<Integer>> graph , int n){
-        int[] color = new int[n];
-        
-        for(int i = 0 ; i < n ; i++){
-            color[i] = white;
-        }
-        for(int i = 0 ;i < n ; i++){
-            if(color[i] == white){
-                if(isCycleUTIL(graph , i , color) == true ){
-                    return true;
-                }
-            }
-        }
-        return false;
+        boolean a = isCycle(graph , vtces);
+        System.out.println(a);
     }
 }
