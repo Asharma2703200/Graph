@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+public class Main{
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int vn = Integer.parseInt(br.readLine());
+        ArrayList<Integer> a = new ArrayList<Integer>();
+        for(int i = 1 ; i <= 9; i++){
+            sol(vn , i , a);
+        }
+        Collections.sort(a);
+        for(int i : a){
+            System.out.print(i + " ");
+        }
+    }
+    static void sol(int x , int num , ArrayList<Integer> a){
+       Queue<Integer> q = new LinkedList<>();
+       q.add(num);
+       
+      while(!q.isEmpty()){
+          num = q.remove();
+          
+           if(num <= x){
+          a.add(num);
+          
+           int r = num % 10;
+           
+           if(r == 0){
+               q.add((num*10) + (r + 1));
+           }
+           q.add((num*10) + (r + 1));
+           q.add((num*10) + (r - 1));
+           
+           if(r == 9){
+               q.add((num*10) + (r - 1));
+           }
+           
+       }
+      }
+       
+    } 
+}
