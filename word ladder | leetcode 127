@@ -1,0 +1,57 @@
+// passed geeks for geeks practise 
+// passed leetcode 127 
+// spaxe complexity worst case of bigO(n) // n : wordlist.length
+// time complexity BFS will shorty in polynomial time
+ O(26 * n * n * w) 
+
+
+class Solution
+{
+    public int wordLadderLength(String startWord, String targetWord, String[] wordList)
+    {
+        // Code here
+        HashSet<String> set = new HashSet<>();
+        for(String s : wordList){
+            set.add(s);
+        }
+        if(!set.contains(targetWord)){
+            return 0;
+        }
+        
+        Queue<String> q = new LinkedList<>();
+        q.add(startWord);
+        int depth = 0;
+        int sz = 0;
+        while(!q.isEmpty()){
+            depth++;
+            
+            sz = q.size();
+            
+            for(int i = 0 ; i < sz ; i++){
+                
+                String s = q.remove();
+                char ch[] = s.toCharArray();
+                for(int j = 0 ; j < ch.length;j++){
+                    for(char k = 'a' ; k <= 'z' ; k++){
+                        ch[j] = k;
+                        String a = new String(ch);
+                        
+                        if(a.equals(s)){
+                            continue;
+                        }
+                        if(set.contains(a)){
+                            q.add(a);
+                            set.remove(a);
+                        }
+                        if(a.equals(targetWord)){
+                            return depth+1;
+                        }
+                    }
+                    ch[j] = s.charAt(j);
+                }
+            }
+        }
+        return 0;
+    }
+}
+
